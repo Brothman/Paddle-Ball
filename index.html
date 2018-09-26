@@ -5,11 +5,17 @@
     <title> My First 2D Canvas Game</title>
     <style>
       * {padding: 0; margin: 0;}
-      canvas {background: #eee; display: block; margin: 0 auto;}
+      body { display: flex; flex-direction: column; align-items: center;}
+      canvas {background: #eee; display: block; margin: 0 auto; position: relative; top: 100px;}
+      button {position: relative; width: 200px; height: 50px; bottom: 85px; border: 3px solid cyan; background: cyan; transition: all 0.3s ease; border-radius: 5px; cursor: pointer; font-size: 24px; font-family: Arial; color: "#000080";}
+      button:hover, button:active {background: mediumspringgreen; border-color: mediumspringgreen; outline: none;}
+
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <canvas id="myCanvas" width="480" height="320">
+    </canvas>
+    <button id="start-button"> Play Game </button>
   </body>
 
   <script src="./index.js">

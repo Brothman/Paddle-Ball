@@ -26,6 +26,8 @@ let brickOffsetLeft = 30;
 let score = 0;
 let lives = 3;
 
+let gameStarted = false;
+
 const bricks = [];
 for (let col = 0; col < brickColumnCount; col++) {
   bricks[col] = [];
@@ -74,51 +76,57 @@ function drawBricks() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //handle bouncing off walls
-  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-    dx = -dx;
-  }
+  if (gameStarted) {
+    //handle bouncing off walls
+    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+      dx = -dx;
+    }
 
-  if (y + dy < ballRadius) {
-    dy = -dy;
-  }
-  else if (y + dy > canvas.height - ballRadius - paddleHeight) {
-    if (x > paddleX && x < paddleX + paddleWidth){
+    if (y + dy < ballRadius) {
       dy = -dy;
     }
-
-    //GAME OVER, ball hit the bottom of the screen
-    else if (y + dy > canvas.height - ballRadius) {
-      lives--;
-      if (lives === 0) {
-        alert("GAME OVER");
-        document.location.reload();
+    else if (y + dy > canvas.height - ballRadius - paddleHeight) {
+      if (x > paddleX && x < paddleX + paddleWidth){
+        dy = -dy;
       }
-      else {
-        x = canvas.width / 2;
-        y = canvas.height - 30;
-        dx = 2;
-        dy = -2;
-        paddleX = (canvas.width - paddleWidth) / 2;
+
+      //GAME OVER, ball hit the bottom of the screen
+      else if (y + dy > canvas.height - ballRadius) {
+        lives--;
+        if (lives === 0) {
+          alert("GAME OVER");
+          gameStarted = false;
+          //Make the Start button Appear
+          const startButton = document.querySelector("#start-button");
+          startButton.style.display = "block";
+          document.location.reload();
+        }
+        else {
+          x = canvas.width / 2;
+          y = canvas.height - 30;
+          dx = 2;
+          dy = -2;
+          paddleX = (canvas.width - paddleWidth) / 2;
+        }
       }
     }
-  }
 
-  if (rightPressed && paddleX < canvas.width - paddleWidth) {
-    paddleX += 7;
-  }
-  else if (leftPressed && paddleX > 0) {
-    paddleX -= 7;
-  }
+    if (rightPressed && paddleX < canvas.width - paddleWidth) {
+      paddleX += 7;
+    }
+    else if (leftPressed && paddleX > 0) {
+      paddleX -= 7;
+    }
 
-  drawBricks();
-  drawBall();
-  drawPaddle();
-  drawScore();
-  drawLives();
-  collisionDetection();
-  x += dx;
-  y += dy;
+    drawBricks();
+    drawBall();
+    drawPaddle();
+    drawScore();
+    drawLives();
+    collisionDetection();
+    x += dx;
+    y += dy;
+  }
   requestAnimationFrame(draw);
 }
 
@@ -136,6 +144,10 @@ function collisionDetection() {
         //You've won!
         if (score === brickRowCount * brickColumnCount) {
           alert("You win! Congratulations!");
+          gameStarted = false;
+          //Make the Start button Appear
+          const startButton = document.querySelector("#start-button");
+          startButton.style.display = "block";
           document.location.reload();
         }
       }
@@ -180,10 +192,18 @@ function mouseMoveHandler(e) {
   }
 }
 
+function startGame(e) {
+  gameStarted = true;
+  //Make the Start button Disappear
+  const startButton = document.querySelector("#start-button");
+  startButton.style.display = "none";
+}
+
 document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 // document.addEventListener('mousemove', mouseMoveHandler, false);
-
+const startButton = document.querySelector("#start-button");
+startButton.addEventListener('click', startGame);
 draw();
 // draw();
 // setInterval(draw, 10);
