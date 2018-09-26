@@ -3,16 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title> My First 2D Canvas Game</title>
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
     <style>
       * {padding: 0; margin: 0;}
-      body { display: flex; flex-direction: column; align-items: center;}
-      canvas {background: #eee; display: block; margin: 0 auto; position: relative; top: 100px;}
-      button {position: relative; width: 200px; height: 50px; bottom: 85px; border: 3px solid cyan; background: cyan; transition: all 0.3s ease; border-radius: 5px; cursor: pointer; font-size: 24px; font-family: Arial; color: "#000080";}
+      body { display: flex; flex-direction: column; align-items: center; margin-top: 50px;}
+      h1 { margin-bottom: 10px; font-family: "Indie Flower"; font-size: 75px;}
+      canvas {background: #eee; display: block; margin: 0 auto; position: relative;}
+      button {position: relative; width: 200px; height: 50px; bottom: 185px; border: 3px solid cyan; background: cyan; transition: all 0.3s ease; border-radius: 5px; cursor: pointer; font-size: 24px; font-family: Arial; color: "#000080";}
       button:hover, button:active {background: mediumspringgreen; border-color: mediumspringgreen; outline: none;}
 
     </style>
   </head>
   <body>
+    <h1 id="header"> Paddle Ball </h1>
     <canvas id="myCanvas" width="480" height="320">
     </canvas>
     <button id="start-button"> Play Game </button>
